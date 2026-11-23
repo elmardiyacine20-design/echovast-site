@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Echovast – Tap into future</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#d10a0a;--bg1:#e30f0f;--bg2:#8e0505;--ink:#fff;--glass:rgba(120,0,0,.38);--line:rgba(255,255,255,.28);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#b50a0a;--bg2:#4a0202}}
+:root[data-theme="dark"]{--bg1:#b50a0a;--bg2:#4a0202}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg1),var(--bg2));background-attachment:fixed;line-height:1.55;overflow-x:hidden}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+:focus-visible{outline:3px solid #fff;outline-offset:3px}
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:16px 24px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo img{height:45px;width:auto;max-width:190px;object-fit:contain;display:block}
+.btn{display:inline-block;border:0;border-radius:14px;padding:13px 24px;font:600 1rem Poppins,sans-serif;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.3)}
+.btn.w{background:#fff;color:var(--red)}
+.btn.g{background:var(--glass);color:#fff;border:1.5px solid var(--line);backdrop-filter:blur(8px)}
+main{position:relative;z-index:2}
+.sec{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:96px 6vw 60px}
+.col{max-width:540px}
+.r .col{margin-left:auto}
+h1{font-size:clamp(3rem,9vw,6.4rem);line-height:.95;margin:0 0 20px;font-weight:700;letter-spacing:-.02em}
+h1 .wd{display:block;overflow:hidden}
+h1 .wd span{display:inline-block;transform:translateY(110%);animation:up .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*.14s + .2s)}
+@keyframes up{to{transform:none}}
+h2{font-size:clamp(2rem,5vw,3.2rem);line-height:1.08;margin:0 0 14px;font-weight:700}
+.col>p{font-size:1.08rem;opacity:.92;margin:0 0 26px;max-width:42ch}
+.acts{display:flex;gap:12px;flex-wrap:wrap}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+.fl{display:grid;gap:12px;padding:0;margin:0;list-style:none}
+.fl li{background:var(--glass);border:1.5px solid var(--line);border-radius:16px;padding:16px 18px;backdrop-filter:blur(10px);transition:transform .25s,background .25s}
+.fl li:hover{transform:translateX(8px);background:rgba(255,255,255,.18)}
+.fl b{display:block;font-size:1.05rem}
+.fl span{opacity:.85;font-size:.92rem}
+.st{counter-reset:s;display:grid;gap:12px;padding:0;margin:0;list-style:none}
+.st li{counter-increment:s;display:flex;gap:16px;align-items:flex-start;background:var(--glass);border:1.5px solid var(--line);border-radius:16px;padding:16px 18px;backdrop-filter:blur(10px)}
+.st li::before{content:counter(s);flex:none;width:34px;height:34px;border-radius:50%;background:#fff;color:var(--red);display:grid;place-items:center;font-weight:700}
+.st b{display:block}
+.cta{justify-content:center;align-items:flex-end;text-align:center}
+.cta .col{max-width:620px}
+.cta .col>p{margin-inline:auto}
+.cta .acts{justify-content:center}
+.tick{position:absolute;left:0;right:0;bottom:0;overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);padding:10px 0;font-weight:500;font-size:.95rem;opacity:.9}
+.tick div{display:inline-block;animation:mq 26s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+.hint{position:fixed;right:22px;bottom:22px;z-index:5;font-size:.8rem;background:var(--glass);border:1px solid var(--line);padding:8px 14px;border-radius:99px;backdrop-filter:blur(8px)}
+.prof{width:min(100%,340px);border:8px solid #2a0707;border-radius:36px;overflow:hidden;background:#fff;color:#2a0707;box-shadow:0 30px 60px rgba(40,0,0,.5)}
+.pb{height:80px;background:linear-gradient(120deg,#d10a0a,#ff4a2a)}
+.pi{padding:0 18px 20px;text-align:center;margin-top:-36px}
+.av{width:72px;height:72px;border-radius:50%;background:#fff;color:#d10a0a;border:4px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.2);display:grid;place-items:center;font-weight:700;font-size:1.5rem;margin:0 auto 8px}
+.pi h3{margin:0;font-size:1.1rem}
+.pi p{margin:0 0 14px;font-size:.85rem;color:#7a5a5a}
+.pl{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;margin-bottom:8px;border:1.5px solid #f0d0d0;border-radius:12px;background:#fff;color:#2a0707;font:500 .9rem Poppins,sans-serif;text-decoration:none;text-align:left;cursor:pointer;transition:background .2s,transform .2s}
+.pl:hover{background:#fbeeee;transform:translateY(-2px)}
+.pl i{width:10px;height:10px;border-radius:50%;background:#d10a0a;flex:none}
+.pl b{margin-left:auto;font-weight:500;font-size:.78rem;color:#7a5a5a}
+.pl.s{background:#d10a0a;color:#fff;border-color:#d10a0a;justify-content:center;font-weight:600}
+.pl.s:hover{background:#a30606}
+.nogl #gl{display:none}
+.nogl .sec{min-height:auto}
+footer{position:relative;z-index:2;text-align:center;padding:26px;font-size:.85rem;opacity:.8}
+@media (max-width:760px){.sec{align-items:flex-end;padding-bottom:7vh}.r .col{margin-left:0}.hint{display:none}h1{font-size:clamp(2.8rem,15vw,4rem)}}
+@media (prefers-reduced-motion:reduce){h1 .wd span{animation:none;transform:none}.rv{opacity:1;transform:none;transition:none}.tick div{animation:none}}
+.nav{display:flex;align-items:center;gap:20px}
+.nav a.l{color:#fff;text-decoration:none;font-weight:500;font-size:.95rem;opacity:.9;padding:6px 2px;border-bottom:2px solid transparent;transition:opacity .2s,border-color .2s}
+.nav a.l:hover{opacity:1;border-color:#fff}
+.col.wide{max-width:1000px;width:100%;margin-inline:auto}
+.col.wide>p{max-width:60ch}
+.badge{display:inline-block;background:var(--glass);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.badge::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#3dff8b;margin-right:8px}
+.sim{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:36px;align-items:start;margin:6px 0 24px}
+.ed{background:var(--glass);border:1.5px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(10px);display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ed label{display:grid;gap:6px;font-size:.82rem;font-weight:500}
+.ed label.full{grid-column:1/-1}
+.ed input{width:100%;border:2px solid transparent;border-radius:12px;padding:11px 14px;font:500 .95rem Poppins,sans-serif;color:#2a0707;background:#fff}
+.ed input:focus{outline:none;border-color:#ffb3a0}
+.sw{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:.82rem;font-weight:500}
+.sw button{width:34px;height:34px;border-radius:50%;border:3px solid #fff0;cursor:pointer;box-shadow:0 0 0 1.5px rgba(255,255,255,.55)}
+.sw button[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 3px rgba(0,0,0,.35)}
+.phone{width:290px;max-width:100%;border:8px solid #1e2a3d;border-radius:38px;background:#f5f7fb;color:#16202f;overflow:hidden;box-shadow:0 30px 60px rgba(40,0,0,.5);position:relative;justify-self:center;text-align:center}
+.phone::before{content:"";position:absolute;top:8px;left:50%;width:84px;height:20px;border-radius:12px;background:#000;transform:translateX(-50%);z-index:2}
+.ph-top{height:118px;background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 40%,#fff),#f5f7fb)}
+.ph-in{padding:0 16px 18px;margin-top:-44px;position:relative}
+.av2{width:88px;height:88px;border-radius:50%;background:var(--ac);color:#fff;border:4px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.2);display:grid;place-items:center;font-weight:700;font-size:1.7rem;margin:0 auto 10px}
+.ph-in h3{margin:0;font-size:1.1rem;word-break:break-word}
+.ph-role{margin:2px 0 8px;font-size:.85rem;color:#5b6678}
+.ph-co{display:inline-block;background:var(--ac);color:#fff;border-radius:99px;padding:3px 12px;font-size:.74rem;font-weight:600;margin-bottom:14px}
+.ph-save{display:block;width:100%;border:0;border-radius:99px;padding:12px;background:var(--ac);color:#fff;font:600 .92rem Poppins,sans-serif;cursor:pointer;margin-bottom:10px}
+.ph-row{display:flex;gap:8px;margin-bottom:12px}
+.ph-b{flex:1;border-radius:99px;padding:9px 6px;font-size:.8rem;font-weight:600;text-decoration:none;border:1.5px solid}
+.ph-b.wa{color:#0b8a4a;background:#e7f8ee;border-color:#a9e3c2}
+.ph-b.ig{color:#c2185b;background:#fdebf2;border-color:#f3b4cd}
+.ph-ls{background:#fff;border:1.5px solid #e3e8f0;border-radius:16px;padding:4px 12px;text-align:left}
+.ph-r{display:block;padding:9px 0;border-bottom:1px solid #eef1f6;color:#16202f;text-decoration:none;font-size:.85rem;font-weight:500;word-break:break-all}
+.ph-r:last-child{border-bottom:0}
+.ph-r small{display:block;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:#8a95a8;font-weight:600}
+.ph-ft{margin:14px 0 0;font-size:.7rem;color:#8a95a8}
+.lk{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.lk input{flex:1;min-width:200px;border:2px solid transparent;border-radius:12px;padding:12px 14px;font:500 .85rem Poppins,sans-serif;background:#fff;color:#2a0707}
+.pvnote{font-size:.85rem;opacity:.9;margin:-4px 0 14px}
+.ed input::placeholder{color:#9a7a7a}
+.msg{min-height:1.4em;font-size:.9rem;opacity:.95;margin:10px 0 0}
+body.sub #top,body.sub .hint,body.sub #gl{display:none!important}
+.sw input[type="color"]{width:38px;height:34px;padding:0;border:0;border-radius:8px;background:none;cursor:pointer}
+.ed .sw input[data-hex]{width:110px;padding:8px 10px;font-size:.85rem}
+#profpage{position:relative;z-index:2}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:6px 0 24px}
+.pc{background:var(--glass);border:1.5px solid var(--line);border-radius:18px;padding:16px;backdrop-filter:blur(10px);display:grid;gap:12px}
+.pc-h{display:flex;align-items:center;gap:12px}
+.pc-av{flex:none;width:48px;height:48px;border-radius:50%;background:var(--ac);color:#fff;border:3px solid #fff;display:grid;place-items:center;font-weight:700}
+.pc-t{min-width:0}
+.pc-t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc-t span{display:block;font-size:.85rem;opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc-a{display:flex;gap:8px;flex-wrap:wrap}
+.pc-a a,.pc-a button{border:0;border-radius:10px;padding:8px 14px;font:600 .85rem Poppins,sans-serif;cursor:pointer;text-decoration:none;background:#fff;color:var(--red)}
+.pc-a button.d{background:rgba(0,0,0,.3);color:#fff}
+.pc{cursor:pointer}
+.lg{max-width:380px;background:var(--glass);border:1.5px solid var(--line);border-radius:20px;padding:24px;backdrop-filter:blur(10px)}
+.lg label{display:block;font-weight:600;font-size:.9rem;margin:0 0 6px}
+.lg input{width:100%;border:2px solid transparent;border-radius:12px;padding:12px 14px;font:500 16px Poppins,sans-serif;color:#2a0707;background:#fff;margin:0 0 14px}
+.lg input:focus{outline:none;border-color:#ffb3a0}
+.lg .msg{margin:0 0 12px;font-weight:600}
+.lo{margin-left:auto}
+.empty{background:var(--glass);border:1.5px dashed var(--line);border-radius:18px;padding:28px;text-align:center}
+#nfcpage,#viewpage{position:relative;z-index:2}
+@media (max-width:820px){.sim{grid-template-columns:1fr}}
+@media (max-width:560px){.ed{grid-template-columns:1fr}.nav .hm{display:none}.nav{gap:12px}.nav .btn{padding:10px 14px;font-size:.85rem}}
+
+/* ===== photo upload + avatar images ===== */
+.av2,.pc-av{overflow:hidden}
+.av2 img,.pc-av img{width:100%;height:100%;object-fit:cover;display:block}
+.up{grid-column:1/-1;display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:.82rem;font-weight:500}
+.up-pv{flex:none;width:64px;height:64px;border-radius:50%;background:#fff;color:var(--red);display:grid;place-items:center;font-weight:700;font-size:1.2rem;overflow:hidden;border:3px solid #fff;box-shadow:0 0 0 1.5px rgba(255,255,255,.55)}
+.up-pv img{width:100%;height:100%;object-fit:cover;display:block}
+.up-bt{display:flex;gap:8px;flex-wrap:wrap}
+.up-bt button{border:0;border-radius:10px;padding:10px 16px;font:600 .85rem Poppins,sans-serif;cursor:pointer;background:#fff;color:var(--red)}
+.up-bt button.d{background:rgba(0,0,0,.3);color:#fff}
+.up-bt button[hidden]{display:none}
+.up-note{flex-basis:100%;margin:0;font-size:.76rem;opacity:.85;min-height:1em}
+.lknote{margin:-6px 0 14px;font-size:.8rem;opacity:.9}
+
+/* ===== responsive ===== */
+img,canvas,svg,video{max-width:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.pg{grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr))}
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0 11px;border:1.5px solid var(--line);border-radius:12px;background:var(--glass);cursor:pointer}
+.burger span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform .25s,opacity .25s}
+header.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+header.open .burger span:nth-child(2){opacity:0}
+header.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (min-width:1600px){html{font-size:112.5%}.sec{padding-inline:8vw}}
+@media (min-width:2200px){html{font-size:125%}}
+@media (max-width:1024px){.sim{gap:24px}}
+@media (max-width:760px),(max-aspect-ratio:9/10){.sec{align-items:flex-end}.r .col{margin-left:0}.col{max-width:100%}.col>p{max-width:100%}}
+@media (max-width:760px){
+  header{padding:10px 14px;background:linear-gradient(180deg,rgba(80,0,0,.55),rgba(80,0,0,0))}
+  .logo img{height:34px;max-width:140px}
+  .burger{display:flex}
+  .nav{display:none;position:absolute;top:100%;left:12px;right:12px;flex-direction:column;align-items:stretch;gap:2px;padding:12px;background:rgba(90,0,0,.94);border:1.5px solid var(--line);border-radius:18px;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+  header.open .nav{display:flex}
+  .nav a.l,.nav .hm{display:block;padding:13px 10px;font-size:1rem;border-bottom:0;border-radius:10px}
+  .nav a.l:hover{background:rgba(255,255,255,.12)}
+  .nav .btn{margin-top:6px;padding:13px 14px;font-size:1rem;text-align:center}
+  .sec{padding:84px 5vw 6vh}
+  .sec.cta,.sec[style]{padding-top:84px}
+  h2{font-size:clamp(1.7rem,8vw,2.4rem)}
+  .col>p{font-size:1rem}
+  .acts .btn,.acts button.btn{flex:1 1 100%;text-align:center}
+  .lk .btn{flex:1 1 auto;text-align:center}
+  .ed{padding:16px;gap:12px}
+  .ed input,.lk input{font-size:16px}
+  .sw button{width:38px;height:38px}
+  .ed .sw input[data-hex]{width:100px}
+  .phone{width:min(290px,100%)}
+  .tick{font-size:.8rem}
+  footer{padding:20px 5vw calc(20px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:380px){
+  .logo img{height:30px;max-width:120px}
+  .phone{border-width:6px;border-radius:32px}
+  .pc{padding:14px}
+}
+@media (max-height:520px) and (orientation:landscape){
+  .sec{min-height:auto;padding-top:76px;padding-bottom:40px}
+  .tick{position:static;margin-top:20px}
+}
+@media (hover:none){.hint{display:none}.btn:hover,.pl:hover{transform:none;box-shadow:none}.fl li:hover{transform:none}}
+.pvbtn{display:none}
+.pvsheet{display:none}
+@media (max-width:820px){
+  .sim .phone{order:-1}
+  body.nfc .pvbtn{display:block;position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:6;border:0;border-radius:99px;padding:13px 20px;font:600 .92rem Poppins,sans-serif;background:#fff;color:var(--red);box-shadow:0 10px 24px rgba(0,0,0,.35);cursor:pointer}
+  .pvsheet.open{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;gap:16px;overflow:auto;padding:20px 16px calc(24px + env(safe-area-inset-bottom,0px));background:rgba(40,0,0,.78);backdrop-filter:blur(8px)}
+  .pvsheet>*{margin-top:auto;margin-bottom:0}
+  .pvsheet>.phone{margin-bottom:auto;margin-top:0}
+}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header>
+  <a class="logo" href="#top"><img src="data:image/png;base64,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" alt="Echovast Logo"></a>
+  <button class="burger" id="bg" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+  <nav class="nav" id="nav"><a class="l hm" href="#top">Home</a><a class="l" href="#/nfc-card">NFC Card</a><a class="l" href="#/profiles">Profiles</a><a class="btn w" href="#order">Order your card</a></nav>
+</header>
+<main id="top">
+  <section class="sec">
+    <div class="col">
+      <h1 aria-label="Tap Into Future"><span class="wd"><span style="--i:0">Tap</span></span><span class="wd"><span style="--i:1">Into</span></span><span class="wd"><span style="--i:2">Future</span></span></h1>
+      <p>The NFC business card that shares your contact, WhatsApp and every link in one tap.</p>
+      <div class="acts"><a class="btn w" href="#order">Get my card</a><a class="btn g" href="#profile">See a live profile</a></div>
+    </div>
+    <div class="tick" aria-hidden="true"><div>Instant sharing &nbsp;•&nbsp; Unlimited links &nbsp;•&nbsp; Always editable &nbsp;•&nbsp; Premium image &nbsp;•&nbsp; Instant sharing &nbsp;•&nbsp; Unlimited links &nbsp;•&nbsp; Always editable &nbsp;•&nbsp; Premium image &nbsp;•&nbsp; Instant sharing &nbsp;•&nbsp; Unlimited links &nbsp;•&nbsp; Always editable &nbsp;•&nbsp; Premium image &nbsp;•&nbsp; Instant sharing &nbsp;•&nbsp; Unlimited links &nbsp;•&nbsp; Always editable &nbsp;•&nbsp; Premium image &nbsp;•&nbsp;</div></div>
+  </section>
+
+  <section class="sec r" id="features">
+    <div class="col rv">
+      <h2>One tap. Everything shared.</h2>
+      <ul class="fl">
+        <li><b>Instant sharing</b><span>Hold the card near a phone and your profile opens.</span></li>
+        <li><b>Unlimited links</b><span>WhatsApp, Instagram, LinkedIn, your website and more.</span></li>
+        <li><b>Always editable</b><span>Change your details any time. No reprinting.</span></li>
+        <li><b>Premium image</b><span>A clean white card that people keep.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="col rv">
+      <h2>Works on any phone.</h2>
+      <ol class="st">
+        <li><div><b>Tap the card</b>Hold it against the back of the phone, or scan the QR code.</div></li>
+        <li><div><b>Your profile opens</b>It loads in the browser. No app to install.</div></li>
+        <li><div><b>They connect</b>They save your contact or message you on WhatsApp.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="profile">
+    <div class="col wide rv">
+      <span class="badge">Live simulator</span>
+      <h2>This is what they see.</h2>
+      <p>Try it with your own info. The phone preview updates live, exactly like after an NFC tap.</p>
+      <p class="pvnote">Private demo: this starts empty every time, nothing you type here is saved, and no one else's profile is ever shown.</p>
+      <div class="sim">
+        <form class="ed" data-form="home" onsubmit="return false"></form>
+        <div class="phone" data-phone></div>
+      </div>
+      <div class="acts"><a class="btn w" href="#/nfc-card">Build my NFC profile</a><button class="btn g" type="button" id="hclr">Clear demo</button></div>
+    </div>
+  </section>
+
+  <section class="sec cta" id="order">
+    <div class="col rv">
+      <h2>Get your Echovast card.</h2>
+      <p>Tell us your name and we reply on WhatsApp with the next steps.</p>
+      <div class="acts"><a class="btn w" id="wa" href="https://wa.me/212707967229?text=Hello%20Echovast%2C%20I%E2%80%99d%20like%20to%20order%20an%20NFC%20card." target="_blank" rel="noopener">Order on WhatsApp</a></div>
+    </div>
+  </section>
+</main>
+
+<div id="nfcpage" style="display:none">
+  <section class="sec">
+    <div class="col wide">
+      <span class="badge">NFC Card</span>
+      <h2>Your NFC Card profile</h2>
+      <p>Got your Echovast card? Fill in your details here. This is the page people see when they tap your card.</p>
+      <div class="sim">
+        <form class="ed" data-form="nfc" onsubmit="return false"></form>
+        <div class="phone" data-phone></div>
+      </div>
+      <p style="margin:0 0 8px;font-weight:600">Your profile link (write this on your NFC card)</p>
+      <div class="lk">
+        <input id="plink" type="text" readonly aria-label="Profile link">
+        <button class="btn w" type="button" id="cpy">Copy link</button>
+        <a class="btn g" id="opn" href="#/nfc-card">Open profile</a>
+      </div>
+      <p class="lknote" id="lknote"></p>
+      <div class="acts"><button class="btn w" type="button" id="sv">Save profile</button><button class="btn g" type="button" id="nw">New profile</button><a class="btn g" href="#top">Back to home</a></div>
+      <p class="msg" id="msg" role="status"></p>
+    </div>
+  </section>
+</div>
+
+<div id="viewpage" style="display:none">
+  <section class="sec" style="justify-content:center">
+    <div class="col" style="text-align:center">
+      <div class="phone" id="vph"></div>
+      <div class="acts" style="justify-content:center;margin-top:26px"><a class="btn g" href="#/nfc-card" id="vbe">Back</a><a class="btn g" href="#/profiles">Back to profiles</a><a class="btn w" href="#order">Get your own Echovast card</a></div>
+    </div>
+  </section>
+</div>
+
+<div id="profpage" style="display:none">
+  <section class="sec">
+    <div class="col wide">
+      <span class="badge">Profiles</span>
+      <h2>Saved profiles</h2>
+      <form class="lg" id="lgf" autocomplete="off" style="display:none">
+        <p style="margin:0 0 14px;font-weight:600">Log in to see the profiles</p>
+        <label for="lgu">Username</label>
+        <input id="lgu" type="text" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username">
+        <label for="lgp">Password</label>
+        <input id="lgp" type="password" autocomplete="current-password">
+        <p class="msg" id="lgm" role="alert"></p>
+        <button class="btn w" type="submit" style="width:100%">Log in</button>
+      </form>
+      <div id="pbox">
+      <p>Every profile you save on the NFC Card page appears here.</p>
+      <div class="pg" id="plist"></div>
+      <div class="acts"><a class="btn w" href="#/nfc-card" id="addp">Create a profile</a><button class="btn g" type="button" id="lgo">Log out</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>Echovast NFC Card · Founder: Yassine Elmardi</footer>
+<button class="pvbtn" id="pvb" type="button">Live preview</button>
+<div class="pvsheet" id="pvs" role="dialog" aria-label="Live preview"><button class="btn w" type="button" id="pvx">Close preview</button><div class="phone" data-phone></div></div>
+<div class="hint" id="hint">Move your mouse, scroll, or tap the card</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.25});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+if(typeof THREE==='undefined'){document.body.classList.add('nogl');document.querySelectorAll('.rv').forEach(function(e){e.classList.add('in')});return}
+
+var canvas=document.getElementById('gl'),renderer;
+try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true})}catch(e){document.body.classList.add('nogl');document.querySelectorAll('.rv').forEach(function(e){e.classList.add('in')});return}
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,1,.1,50);cam.position.z=6;
+scene.add(new THREE.AmbientLight(0xffffff,.75));
+var key=new THREE.DirectionalLight(0xffffff,.9);key.position.set(3,4,5);scene.add(key);
+var rim=new THREE.PointLight(0xff5a3c,1.4,14);rim.position.set(-3,-1,3);scene.add(rim);
+
+var W=3.4,H=2.14,R=.17,D=.04;
+function rr(w,h,r){var s=new THREE.Shape(),x=-w/2,y=-h/2;s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s}
+var shape=rr(W,H,R);
+var body=new THREE.Mesh(new THREE.ExtrudeGeometry(shape,{depth:D,bevelEnabled:true,bevelThickness:.012,bevelSize:.012,bevelSegments:4,curveSegments:16}),new THREE.MeshStandardMaterial({color:0xf4f4f4,roughness:.35,metalness:.05}));
+body.geometry.translate(0,0,-D/2);
+
+function face(tex){var g=new THREE.ShapeGeometry(shape,16),p=g.attributes.position,uv=g.attributes.uv;
+  for(var i=0;i<p.count;i++)uv.setXY(i,(p.getX(i)+W/2)/W,(p.getY(i)+H/2)/H);
+  var t=new THREE.CanvasTexture(tex);t.anisotropy=8;
+  return new THREE.Mesh(g,new THREE.MeshStandardMaterial({map:t,roughness:.3,metalness:.05}))}
+
+function draw(){
+  var f=document.createElement('canvas');f.width=1360;f.height=856;var c=f.getContext('2d');
+  c.fillStyle='#f6f6f6';c.fillRect(0,0,f.width,f.height);
+  var red='#d10a0a',n=25,m=11,ox=200,oy=290,sz=m*n;
+  c.fillStyle=red;var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+  function fnd(x,y){c.fillRect(ox+x*m,oy+y*m,7*m,7*m);c.clearRect(ox+(x+1)*m,oy+(y+1)*m,5*m,5*m);c.fillStyle='#f6f6f6';c.fillRect(ox+(x+1)*m,oy+(y+1)*m,5*m,5*m);c.fillStyle=red;c.fillRect(ox+(x+2)*m,oy+(y+2)*m,3*m,3*m)}
+  for(var y=0;y<n;y++)for(var x=0;x<n;x++){var inF=(x<8&&y<8)||(x>16&&y<8)||(x<8&&y>16);if(!inF&&rnd()>.52)c.fillRect(ox+x*m,oy+y*m,m-1,m-1)}
+  fnd(0,0);fnd(18,0);fnd(0,18);
+  c.fillStyle='#f6f6f6';c.fillRect(ox+10*m,oy+10*m,5*m,5*m);c.strokeStyle=red;c.lineWidth=6;c.lineCap='round';var cx=ox+12.5*m,cy=oy+12.5*m;for(var q2=0;q2<3;q2++){var an=q2*Math.PI/3;c.beginPath();c.moveTo(cx-Math.cos(an)*2*m,cy-Math.sin(an)*2*m);c.lineTo(cx+Math.cos(an)*2*m,cy+Math.sin(an)*2*m);c.stroke()}c.fillStyle=red;
+  c.fillRect(ox+sz+55,oy-15,5,sz+30);
+  c.font='700 150px Poppins,Arial,sans-serif';c.fillStyle=red;c.textBaseline='alphabetic';var wm=c.measureText('echovast').width,fs=150*500/wm;c.font='700 '+fs+'px Poppins,Arial,sans-serif';c.fillText('echovast',ox+sz+110,oy+175);
+  c.font='500 28px Poppins,Arial,sans-serif';c.fillText('Founder: Yassine Elmardi',ox+sz+114,oy+228);
+  c.font='700 44px Poppins,Arial,sans-serif';c.textAlign='right';c.fillText('echovast',1170,750);c.textAlign='left';
+  c.lineWidth=7;c.strokeStyle=red;c.lineCap='round';for(var k=1;k<=3;k++){c.beginPath();c.arc(1200,738,k*14,-Math.PI/3,Math.PI/3);c.stroke()}
+  var b=document.createElement('canvas');b.width=1360;b.height=856;var d=b.getContext('2d');
+  var gr=d.createLinearGradient(0,0,1360,856);gr.addColorStop(0,'#e30f0f');gr.addColorStop(1,'#8e0505');d.fillStyle=gr;d.fillRect(0,0,1360,856);
+  d.strokeStyle='rgba(255,255,255,.22)';d.lineWidth=3;for(var j=0;j<7;j++){d.beginPath();d.arc(1360,0,160+j*90,0,Math.PI*2);d.stroke()}
+  d.fillStyle='#fff';d.beginPath();d.arc(680,360,130,0,Math.PI*2);d.fill();
+  d.fillStyle='#d10a0a';d.font='700 210px Poppins,Arial,sans-serif';d.textAlign='center';d.fillText('e',680,435);
+  d.fillStyle='#fff';d.font='700 70px Poppins,Arial,sans-serif';d.fillText('ECHOVAST',680,620);d.font='400 34px Poppins,Arial,sans-serif';d.fillText('Nfc Card',680,675);
+  return [f,b]}
+
+var card=new THREE.Group(),inner=new THREE.Group();card.add(inner);inner.add(body);
+var fr=null,bk=null;
+function build(){var t=draw();fr=face(t[0]);fr.position.z=D/2+.0125;bk=face(t[1]);bk.rotation.y=Math.PI;bk.position.z=-(D/2+.0125);inner.add(fr);inner.add(bk)}
+build();
+if(document.fonts&&document.fonts.load){document.fonts.load('700 100px Poppins').then(function(){inner.remove(fr);inner.remove(bk);build()}).catch(function(){})}
+scene.add(card);
+
+var rings=[];
+function pulse(){var m=new THREE.Mesh(new THREE.RingGeometry(.95,1,64),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.9,side:THREE.DoubleSide}));m.position.z=.06;m.userData.t=0;inner.add(m);rings.push(m)}
+var ribbons=new THREE.Group();scene.add(ribbons);
+for(var i=0;i<4;i++){var pts=[];for(var j=0;j<9;j++){var a=j/8*Math.PI*2+i;pts.push(new THREE.Vector3(Math.cos(a)*(3+i*.6)+Math.sin(j*2+i)*.5,Math.sin(a*1.3)*(1.8+i*.3),Math.sin(a)*1.5-1.5))}
+  var cv=new THREE.CatmullRomCurve3(pts,true);ribbons.add(new THREE.Mesh(new THREE.TubeGeometry(cv,160,.012+i*.003,6,true),new THREE.MeshBasicMaterial({color:i%2?0xffc9a0:0xffffff,transparent:true,opacity:.55})))}
+var pg=new THREE.BufferGeometry(),pa=new Float32Array(300*3);for(var q=0;q<pa.length;q++)pa[q]=(Math.random()-.5)*(q%3==2?8:16);
+pg.setAttribute('position',new THREE.BufferAttribute(pa,3));
+var pts3=new THREE.Points(pg,new THREE.PointsMaterial({size:.035,color:0xffffff,transparent:true,opacity:.7}));scene.add(pts3);
+
+var mob=false,ms=.55;function K(){return mob?[
+ {x:0,y:1.05,s:ms,ry:-.4,rx:.15,rz:-.1},{x:0,y:1.05,s:ms,ry:.6,rx:-.1,rz:.08},{x:0,y:1.05,s:ms,ry:Math.PI-.4,rx:.1,rz:.08},{x:0,y:1.05,s:ms*.92,ry:Math.PI*2-.3,rx:.1,rz:0},{x:0,y:1.15,s:ms*1.08,ry:Math.PI*2,rx:0,rz:0}]:[
+ {x:1.9,y:.1,s:1,ry:-.5,rx:.18,rz:-.12},{x:-1.9,y:0,s:1,ry:.75,rx:-.1,rz:.08},{x:1.9,y:0,s:1,ry:Math.PI-.55,rx:.1,rz:.1},{x:-2.2,y:0,s:.9,ry:Math.PI*2-.45,rx:.08,rz:-.06},{x:0,y:1.0,s:.9,ry:Math.PI*2,rx:0,rz:0}]}
+var keys=K();
+function resize(){var w=innerWidth,h=innerHeight;var asp=w/h;mob=w<=760||asp<.9;ms=Math.max(.4,Math.min(.9,asp*1.15));keys=K();renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+addEventListener('resize',resize);addEventListener('orientationchange',function(){setTimeout(resize,250)});resize();
+
+var mx=0,my=0,sy=0,cur={x:0,y:0,s:1,ry:0,rx:0,rz:0},clock=new THREE.Clock(),last=0;
+addEventListener('pointermove',function(e){mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1;document.getElementById('hint').style.opacity=0});
+addEventListener('click',function(e){var x=e.clientX/innerWidth*2-1,y=-(e.clientY/innerHeight*2-1),rc=new THREE.Raycaster();rc.setFromCamera({x:x,y:y},cam);if(rc.intersectObject(body,true).length||rc.intersectObjects([fr,bk]).length){pulse();spin=1}});
+var spin=0;
+function ease(t){return t*t*(3-2*t)}
+function tick(){
+  requestAnimationFrame(tick);
+  if(document.body.classList.contains('sub'))return;
+  var t=clock.getElapsedTime(),dt=Math.min(clock.getDelta(),.05);
+  var f=Math.max(0,Math.min(keys.length-1,scrollY/innerHeight)),i=Math.min(keys.length-2,Math.floor(f)),u=ease(f-i),a=keys[i],b=keys[i+1],tg={};
+  for(var k in a)tg[k]=a[k]+(b[k]-a[k])*u;
+  for(var k2 in tg)cur[k2]+=(tg[k2]-cur[k2])*.08;
+  if(spin>0)spin=Math.max(0,spin-.016);
+  card.position.set(cur.x,cur.y+(reduce?0:Math.sin(t*1.2)*.08),0);card.scale.setScalar(cur.s);
+  inner.rotation.set(cur.rx+my*.18,cur.ry+mx*.35+(reduce?0:Math.sin(t*.7)*.06)+ease(1-spin)*0-(1-ease(1-spin))*0+spin*Math.PI*2,cur.rz);
+  ribbons.rotation.y=t*.08;ribbons.rotation.z=Math.sin(t*.2)*.1;pts3.rotation.y=t*.02;pts3.position.y=(scrollY/innerHeight)*.4;
+  rim.position.x=-3+mx*2;
+  if(!reduce&&t-last>3.2){last=t;pulse()}
+  for(var r=rings.length-1;r>=0;r--){var m=rings[r];m.userData.t+=.016;var s=.4+m.userData.t*2.2;m.scale.setScalar(s*1.0);m.material.opacity=Math.max(0,.8-m.userData.t*.75);if(m.userData.t>1.1){inner.remove(m);m.geometry.dispose();m.material.dispose();rings.splice(r,1)}}
+  renderer.render(scene,cam)}
+tick();
+})();
+</script>
+<script>
+(function(){
+try{localStorage.removeItem('echovast-profile');localStorage.removeItem('echovast-cur')}catch(e){}
+var def={name:'',role:'',company:'',wa:'',ig:'',email:'',web:'',li:'',ac:'#d10a0a',ph:''};
+var keys=Object.keys(def);
+function clean(o){var r={};keys.forEach(function(k){r[k]=(o&&typeof o[k]==='string')?(k==='ph'?o[k].slice(0,60000):o[k].slice(0,120)):def[k]});if(!/^#[0-9a-f]{6}$/i.test(r.ac))r.ac=def.ac;if(!/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(r.ph))r.ph='';return r}
+function blank(){return clean(def)}
+var S=blank(),H=blank(),keep=false;
+function stOf(el){return el&&el.closest&&el.closest('#top')?H:S}
+function save(d){}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function enc(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function dec(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return clean(JSON.parse(decodeURIComponent(escape(atob(s)))))}catch(e){return null}}
+function ext(u){u=u.trim();return /^https?:\/\//i.test(u)?u:'https://'+u}
+function ini(n){var p=n.trim().split(/\s+/).filter(Boolean);return ((p[0]||'?').charAt(0)+(p.length>1?p[p.length-1].charAt(0):'')).toUpperCase()}
+function igh(v){return v.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i,'').replace(/^@/,'').replace(/\/.*$/,'')}
+function phoneHTML(d){
+  var wa=d.wa.replace(/\D/g,''),ig=igh(d.ig);
+  var h='<div class="ph-top"></div><div class="ph-in"><div class="av2">'+(d.ph?'<img src="'+esc(d.ph)+'" alt="'+esc(d.name||'Profile photo')+'">':esc(ini(d.name)))+'</div><h3>'+esc(d.name||'Your name')+'</h3>';
+  if(d.role)h+='<p class="ph-role">'+esc(d.role)+'</p>';
+  if(d.company)h+='<span class="ph-co">'+esc(d.company)+'</span>';
+  h+='<button type="button" class="ph-save" data-vc>Save contact</button>';
+  if(wa||ig){h+='<div class="ph-row">';
+    if(wa)h+='<a class="ph-b wa" target="_blank" rel="noopener" href="https://wa.me/'+wa+'">WhatsApp</a>';
+    if(ig)h+='<a class="ph-b ig" target="_blank" rel="noopener" href="https://instagram.com/'+esc(encodeURIComponent(ig))+'">Instagram</a>';
+    h+='</div>'}
+  var rows='';
+  if(d.wa.trim())rows+='<a class="ph-r" href="tel:+'+wa+'"><small>Phone</small>'+esc(d.wa)+'</a>';
+  if(d.email.trim())rows+='<a class="ph-r" href="mailto:'+esc(d.email.trim())+'"><small>Email</small>'+esc(d.email)+'</a>';
+  if(d.web.trim())rows+='<a class="ph-r" target="_blank" rel="noopener" href="'+esc(ext(d.web))+'"><small>Website</small>'+esc(d.web)+'</a>';
+  if(d.li.trim())rows+='<a class="ph-r" target="_blank" rel="noopener" href="'+esc(ext(d.li))+'"><small>LinkedIn</small>'+esc(d.li)+'</a>';
+  if(ig)rows+='<a class="ph-r" target="_blank" rel="noopener" href="https://instagram.com/'+esc(encodeURIComponent(ig))+'"><small>Instagram</small>@'+esc(ig)+'</a>';
+  if(rows)h+='<div class="ph-ls">'+rows+'</div>';
+  return h+'<p class="ph-ft">Powered by Echovast · NFC</p></div>'}
+function paint(el,d){el.style.setProperty('--ac',d.ac);el.innerHTML=phoneHTML(d)}
+var view=null;
+function renderAll(){document.querySelectorAll('[data-phone]').forEach(function(p){paint(p,stOf(p))});var l=document.getElementById('plink');if(l){l.value=link();document.getElementById('opn').href=l.value;var ln=document.getElementById('lknote');if(ln)ln.textContent=S.ph?'Your link includes your photo, so it is long. It works for sharing, QR codes and NFC tags with enough memory. Remove the photo for a short link.':''}}
+function base(){return location.href.split('#')[0]}
+function link(){return location.href.split('#')[0]+'#/u/'+enc(S)}
+var PH={name:'Your full name',role:'e.g. Designer',company:'e.g. Your company',wa:'e.g. +212 600 000 000',ig:'@username',email:'you@example.com',li:'linkedin.com/in/username',web:'yourwebsite.com'};
+var F={home:[['name','Full name',1],['role','Job title'],['company','Company'],['wa','WhatsApp'],['ig','Instagram']],
+       nfc:[['name','Full name',1],['role','Job title'],['company','Company'],['wa','WhatsApp / phone'],['email','Email'],['ig','Instagram'],['li','LinkedIn URL'],['web','Website']]};
+var COL=['#d10a0a','#0a5cff','#0aa05a','#16202f','#0f9488'];
+document.querySelectorAll('[data-form]').forEach(function(f){
+  var h='';F[f.dataset.form].forEach(function(x){h+='<label class="'+(x[2]?'full':'')+'">'+x[1]+'<input type="text" data-k="'+x[0]+'" autocomplete="off"'+(PH[x[0]]?' placeholder="'+esc(PH[x[0]])+'"':'')+'></label>'});
+  h+='<div class="up"><div class="up-pv" data-pv></div><div class="up-bt"><button type="button" data-addph>Add photo</button><button type="button" class="d" data-rmph hidden>Remove</button></div><input type="file" accept="image/*" data-photo hidden><p class="up-note" data-upn role="status"></p></div>';
+  h+='<div class="sw">Accent color';COL.forEach(function(c){h+='<button type="button" data-c="'+c+'" style="background:'+c+'" aria-label="Color '+c+'"></button>'});h+='<input type="color" data-pick aria-label="Pick any color"><input type="text" data-hex maxlength="7" placeholder="#d10a0a" aria-label="Color code"></div>';
+  f.innerHTML=h});
+function syncForms(){document.querySelectorAll('[data-form]').forEach(function(f){var d=stOf(f);
+  f.querySelectorAll('[data-pv]').forEach(function(p){p.innerHTML=d.ph?'<img src="'+esc(d.ph)+'" alt="">':esc(ini(d.name))});
+  f.querySelectorAll('[data-rmph]').forEach(function(b){b.hidden=!d.ph});
+  f.querySelectorAll('[data-addph]').forEach(function(b){b.textContent=d.ph?'Change photo':'Add photo'});
+  f.querySelectorAll('input[data-k]').forEach(function(i){if(document.activeElement!==i)i.value=d[i.dataset.k]});
+  f.querySelectorAll('.sw button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.c.toLowerCase()===d.ac.toLowerCase())});
+  f.querySelectorAll('[data-pick]').forEach(function(p){p.value=d.ac});
+  f.querySelectorAll('[data-hex]').forEach(function(x){if(document.activeElement!==x)x.value=d.ac})})}
+function setAc(v,d){d.ac=v.toLowerCase();save(d);syncForms();renderAll()}
+document.addEventListener('input',function(e){var t=e.target;
+  if(t.matches&&t.matches('[data-pick]')){setAc(t.value,stOf(t));return}
+  if(t.matches&&t.matches('[data-hex]')){var v=t.value.trim();if(v&&v.charAt(0)!=='#')v='#'+v;if(/^#[0-9a-f]{6}$/i.test(v))setAc(v,stOf(t));return}
+  var k=t.dataset&&t.dataset.k;if(!k)return;var d=stOf(t);d[k]=t.value;save(d);syncForms();renderAll()});
+function upNote(el,t){var n=el.closest('.up').querySelector('[data-upn]');if(n)n.textContent=t||''}
+function shrink(file,done,fail){var r=new FileReader();r.onerror=fail;r.onload=function(){var im=new Image();im.onerror=fail;im.onload=function(){
+  var z=160,c=document.createElement('canvas');c.width=c.height=z;var x=c.getContext('2d'),m=Math.min(im.width,im.height),sx=(im.width-m)/2,sy=(im.height-m)/2;
+  x.fillStyle='#fff';x.fillRect(0,0,z,z);x.drawImage(im,sx,sy,m,m,0,0,z,z);done(c.toDataURL('image/jpeg',.7))};im.src=r.result};r.readAsDataURL(file)}
+document.addEventListener('change',function(e){var t=e.target;if(!t.matches||!t.matches('[data-photo]'))return;var f=t.files&&t.files[0];if(!f)return;
+  if(f.type&&f.type.indexOf('image/')!==0){upNote(t,'Please choose an image file.');t.value='';return}
+  upNote(t,'Processing photo…');
+  var d=stOf(t);shrink(f,function(u){d.ph=u;save(d);syncForms();renderAll();upNote(t,'Photo added.');t.value=''},function(){upNote(t,'This image could not be read. Try a JPG or PNG.');t.value=''})});
+document.addEventListener('click',function(e){
+  var ap=e.target.closest('[data-addph]');if(ap){ap.closest('.up').querySelector('[data-photo]').click();return}
+  var rp=e.target.closest('[data-rmph]');if(rp){var d=stOf(rp);d.ph='';save(d);syncForms();renderAll();upNote(rp,'Photo removed.');return}
+  var c=e.target.closest('.sw button');if(c){var d=stOf(c);d.ac=c.dataset.c;save(d);syncForms();renderAll();return}
+  var v=e.target.closest('[data-vc]');if(v){var d=v.closest('#vph')?view:stOf(v);vcf(d)}});
+function vcf(d){
+  function q(s){return s.replace(/([,;])/g,'\\$1')}
+  var t='BEGIN:VCARD\nVERSION:3.0\nFN:'+q(d.name)+'\n';
+  if(d.company)t+='ORG:'+q(d.company)+'\n';if(d.role)t+='TITLE:'+q(d.role)+'\n';
+  if(d.wa.trim())t+='TEL;TYPE=CELL:+'+d.wa.replace(/\D/g,'')+'\n';
+  if(d.email.trim())t+='EMAIL:'+q(d.email.trim())+'\n';
+  if(d.web.trim())t+='URL:'+ext(d.web)+'\n';
+  if(d.ph)t+='PHOTO;ENCODING=b;TYPE=JPEG:'+d.ph.split(',')[1]+'\n';
+  t+='END:VCARD';
+  var a=document.createElement('a');a.href='data:text/vcard;charset=utf-8,'+encodeURIComponent(t);a.download=(d.name||'contact').toLowerCase().replace(/\s+/g,'-')+'.vcf';document.body.appendChild(a);a.click();a.remove()}
+var msg=document.getElementById('msg');
+function say(t){msg.textContent=t}
+var API='/api/',TK='echovast-token';
+function tok(){try{return sessionStorage.getItem(TK)||window.__tok||''}catch(e){return window.__tok||''}}
+function setTok(v){window.__tok=v||'';try{if(v)sessionStorage.setItem(TK,v);else sessionStorage.removeItem(TK)}catch(e){}}
+function api(path,o){o=o||{};var h={'Content-Type':'application/json'};if(o.auth&&tok())h.Authorization='Bearer '+tok();
+  return fetch(API+path,{method:o.method||'GET',headers:h,body:o.body?JSON.stringify(o.body):undefined}).then(function(r){
+    return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(j.error||'Error');e.status=r.status;throw e}return j})})}
+var curId=null,curKey=null,PL=[];
+function setCur(id,key){curId=id;curKey=key||null}
+document.getElementById('sv').addEventListener('click',function(){
+  var b=this,d=clean(S),req,adm=!!tok();
+  if(!d.name.trim()){say('Please enter a full name first.');return}
+  b.disabled=true;say('Saving…');
+  if(curId&&adm)req=api('profiles/'+encodeURIComponent(curId),{method:'PUT',auth:true,body:{d:d}});
+  else if(curId&&curKey)req=api('profiles/'+encodeURIComponent(curId),{method:'PUT',body:{d:d,key:curKey}});
+  else req=api('profiles',{method:'POST',auth:adm,body:{d:d}});
+  req.then(function(r){setCur(r.id||curId,r.key||curKey);say(adm?'Profile saved. You can find it on the Profiles page.':'Profile saved. Your card is registered with Echovast.')})
+  .catch(function(e){say(e.status===404?'This profile no longer exists. Press New profile and save again.':'Could not save right now. Check your connection, or copy your profile link instead.')})
+  .then(function(){b.disabled=false})});
+document.getElementById('nw').addEventListener('click',function(){
+  S=blank();setCur(null);syncForms();renderAll();say('New empty profile. Fill it in, then save.')});
+function renderProfiles(){
+  var l=document.getElementById('plist');
+  l.innerHTML='<div class="empty" style="grid-column:1/-1">Loading profiles…</div>';
+  api('profiles',{auth:true}).then(function(r){
+    PL=r.items||[];
+    if(!PL.length){l.innerHTML='<div class="empty" style="grid-column:1/-1">No saved profiles yet. When someone creates a card on the NFC Card page and saves it, it appears here.</div>';return}
+    l.innerHTML=PL.map(function(p){var d=clean(p.d);
+      return '<div class="pc" data-open="#/u/'+enc(d)+'" style="--ac:'+esc(d.ac)+'"><div class="pc-h"><div class="pc-av">'+(d.ph?'<img src="'+esc(d.ph)+'" alt="">':esc(ini(d.name)))+'</div><div class="pc-t"><b>'+esc(d.name||'No name')+'</b><span>'+esc([d.role,d.company].filter(Boolean).join(' · '))+'</span></div></div>'+
+        '<div class="pc-a"><a href="#/u/'+enc(d)+'">Open</a><button type="button" data-cp="'+esc(p.id)+'">Copy link</button><button type="button" data-ed="'+esc(p.id)+'">Edit</button><button type="button" class="d" data-del="'+esc(p.id)+'">Delete</button></div></div>'}).join('')
+  }).catch(function(e){
+    if(e.status===401){setTok('');gate();return}
+    l.innerHTML='<div class="empty" style="grid-column:1/-1">Could not load profiles. Check your connection and reload.</div>'})}
+document.getElementById('plist').addEventListener('click',function(e){
+  var ed=e.target.closest('[data-ed]'),dl=e.target.closest('[data-del]'),cp=e.target.closest('[data-cp]'),pc=e.target.closest('.pc');
+  function find(id){return PL.find(function(x){return x.id===id})}
+  if(cp){var q=find(cp.dataset.cp);if(q){var u=base()+'#/u/'+enc(clean(q.d));
+    var ok=function(){cp.textContent='Copied!';setTimeout(function(){cp.textContent='Copy link'},1500)};
+    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(ok).catch(function(){var t=document.createElement('textarea');t.value=u;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(x){prompt('Copy this link:',u)}document.body.removeChild(t)})}return}
+  if(pc&&!ed&&!dl&&!e.target.closest('a')){location.hash=pc.dataset.open;return}
+  if(ed){var p=find(ed.dataset.ed);if(p){S=clean(p.d);setCur(p.id);keep=true;location.hash='#/nfc-card'}return}
+  if(dl&&confirm('Delete this profile?')){var id=dl.dataset.del;
+    api('profiles/'+encodeURIComponent(id),{method:'DELETE',auth:true}).then(function(){if(curId===id)setCur(null);renderProfiles()}).catch(function(){alert('Could not delete. Please try again.')})}});
+document.getElementById('hclr').addEventListener('click',function(){H=blank();document.querySelectorAll('#top [data-upn]').forEach(function(n){n.textContent=''});syncForms();renderAll()});
+document.getElementById('addp').addEventListener('click',function(){document.getElementById('nw').click()});
+document.getElementById('opn').addEventListener('click',function(e){e.preventDefault();keep=true;location.hash='#/u/'+enc(S)});
+document.getElementById('cpy').addEventListener('click',function(){var i=document.getElementById('plink');i.select();
+  (navigator.clipboard?navigator.clipboard.writeText(i.value):Promise.reject()).then(function(){say('Link copied.')}).catch(function(){try{document.execCommand('copy');say('Link copied.')}catch(e){say('Select the link and copy it.')}})});
+function gate(){var ok=!!tok();
+  document.getElementById('lgf').style.display=ok?'none':'';
+  document.getElementById('pbox').style.display=ok?'':'none';
+  if(ok)renderProfiles();else{document.getElementById('lgm').textContent='';document.getElementById('lgp').value=''}}
+document.getElementById('lgf').addEventListener('submit',function(e){e.preventDefault();
+  var u=document.getElementById('lgu').value.trim(),p=document.getElementById('lgp').value,m=document.getElementById('lgm');
+  m.textContent='Logging in…';
+  api('login',{method:'POST',body:{username:u,password:p}}).then(function(r){setTok(r.token);document.getElementById('lgu').value='';gate()})
+  .catch(function(er){m.textContent=er.status===401?'Incorrect username or password.':'Could not reach the server. Try again.';document.getElementById('lgp').value=''})});
+document.getElementById('lgo').addEventListener('click',function(){setTok('');setCur(null);gate()});
+var prev=null;
+var landed=location.hash.indexOf('#/u/')===0;
+function route(){
+  if(location.hash.indexOf('#/u/')!==0)landed=false;
+  var h=location.hash,mode=h==='#/nfc-card'?'nfc':(h==='#/profiles'?'profiles':(h.indexOf('#/u/')===0?'view':'home'));
+  document.getElementById('profpage').style.display=mode==='profiles'?'':'none';
+  if(mode==='profiles')gate();
+  document.getElementById('top').style.display=mode==='home'?'':'none';
+  document.getElementById('nfcpage').style.display=mode==='nfc'?'':'none';
+  document.getElementById('viewpage').style.display=mode==='view'?'':'none';
+  document.body.classList.toggle('sub',mode!=='home');document.body.classList.toggle('nfc',mode==='nfc');
+  if(mode==='view'){view=dec(h.slice(4))||blank();document.getElementById('vbe').style.display=landed?'none':'';paint(document.getElementById('vph'),view)}
+  if(mode==='nfc'){if(!keep){S=blank();setCur(null);say('');document.querySelectorAll('#nfcpage [data-upn]').forEach(function(n){n.textContent=''})}keep=false;syncForms();renderAll();document.getElementById('opn').href=link()}
+  if(mode==='home'||mode==='profiles')keep=false;
+  if(mode!=='home')scrollTo(0,0);
+  else if(prev&&prev!=='home'){var el=h.length>1&&h.charAt(1)!=='/'?document.getElementById(h.slice(1)):null;if(el)el.scrollIntoView();else scrollTo(0,0)}
+  prev=mode}
+addEventListener('hashchange',route);
+syncForms();renderAll();route();
+})();
+</script>
+<script>
+(function(){
+var h=document.querySelector('header'),b=document.getElementById('bg');
+function set(o){h.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu')}
+b.addEventListener('click',function(e){e.stopPropagation();set(!h.classList.contains('open'))});
+document.getElementById('nav').addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+document.addEventListener('click',function(e){if(!h.contains(e.target))set(false)});
+addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+addEventListener('hashchange',function(){set(false);pv(false)});
+var sh=document.getElementById('pvs');
+function pv(o){sh.classList.toggle('open',o);document.body.style.overflow=o?'hidden':''}
+document.getElementById('pvb').addEventListener('click',function(){pv(true)});
+document.getElementById('pvx').addEventListener('click',function(){pv(false)});
+sh.addEventListener('click',function(e){if(e.target===sh)pv(false)});
+addEventListener('keydown',function(e){if(e.key==='Escape')pv(false)});
+addEventListener('resize',function(){if(innerWidth>760)set(false);if(innerWidth>820)pv(false)});
+})();
+</script>
+</body>
+</html>
