@@ -1,3 +1,12 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Fallback: if the function's own path routing is ignored, route /api/* to it.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/profiles/:splat"
+  status = 200
