@@ -1,10 +1,11 @@
 import { getStore } from "@netlify/blobs";
 import crypto from "node:crypto";
 
-// Admin credentials: set ADMIN_USER / ADMIN_PASS (and SESSION_SECRET) in Netlify > Site configuration > Environment variables.
-const ADMIN_USER = (process.env.ADMIN_USER || "yassine").toLowerCase();
-const ADMIN_PASS = process.env.ADMIN_PASS || "2004@";
-const SECRET = process.env.SESSION_SECRET || "echovast::" + ADMIN_PASS;
+// === Admin login (edit these two lines to change it, then redeploy) ===
+const ADMIN_USER = "yassine";
+const ADMIN_PASS = "2004@";
+// Private signing key for sessions. Put any long random text here.
+const SECRET = "echovast-change-this-to-a-long-random-text-9f3k2";
 const MAX_PROFILES = 5000;
 const FIELDS = ["name", "role", "company", "wa", "ig", "email", "web", "li", "ac", "ph"];
 
@@ -44,22 +45,23 @@ function isAdmin(req) {
 
 export default async (req) => {
   const url = new URL(req.url);
-  const parts = url.pathname.replace(/^\/api\/?/, "").split("/").filter(Boolean);
-  const store = getStore("profiles");
+  const parts = url.pathname.replace(/^\/(api|\.netlify\/functions\/profiles)\/?/, "").split("/").filter(Boolean);
   const route = parts[0];
   const id = parts[1] ? decodeURIComponent(parts[1]) : null;
 
   try {
-    // ---- Login ----
+    // ---- Login (does not need the database) ----
     if (route === "login" && req.method === "POST") {
       const b = await req.json().catch(() => ({}));
-      const okU = safeEq(String(b.username || "").trim().toLowerCase(), ADMIN_USER);
-      const okP = safeEq(String(b.password || ""), ADMIN_PASS);
+      const okU = safeEq(String(b.username || "").trim().toLowerCase(), ADMIN_USER.toLowerCase());
+      const okP = safeEq(String(b.password || "").trim(), ADMIN_PASS);
       if (okU && okP) return json({ token: makeToken() });
       return json({ error: "Incorrect username or password." }, 401);
     }
 
     if (route !== "profiles") return json({ error: "Not found" }, 404);
+
+    const store = getStore("profiles");
 
     // ---- Create (public: any visitor who builds a card) ----
     if (!id && req.method === "POST") {
