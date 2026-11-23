@@ -561,6 +561,7 @@ function gate(){var ok=!!tok();
   if(ok)renderProfiles();else{document.getElementById('lgm').textContent='';document.getElementById('lgp').value=''}}
 document.getElementById('lgf').addEventListener('submit',function(e){e.preventDefault();
   var u=document.getElementById('lgu').value.trim(),p=document.getElementById('lgp').value,m=document.getElementById('lgm');
+  if(location.protocol==='file:'){m.textContent='Open the site from its Netlify address (https://...netlify.app), not from the file on your computer.';return}
   m.textContent='Logging in…';
   api('login',{method:'POST',body:{username:u,password:p}}).then(function(r){setTok(r.token);document.getElementById('lgu').value='';gate()})
   .catch(function(er){m.textContent=er.status===401?'Incorrect username or password.':(er.status===404?'Server function not found (404). The site was not deployed with its functions folder.':'Error'+(er.status?' ('+er.status+')':'')+': '+(er.message||'unknown')+' - '+location.origin);document.getElementById('lgp').value=''})});
